@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -37,6 +38,18 @@ export default function Signup() {
         email,
         password,
       });
+      const token = response.data.token;
+      interface TokenPayload {
+        name: string;
+        email: string;
+      } // Assuming the token is returned in the response data
+      if (token) {
+        localStorage.setItem("token", token);
+
+        const decoded = jwtDecode<TokenPayload>(token);
+        console.log(decoded);
+        setUsername(decoded.name);
+      }
 
       if (response.status === 201) {
         navigate("/login"); // Redirect to login after successful sign-up

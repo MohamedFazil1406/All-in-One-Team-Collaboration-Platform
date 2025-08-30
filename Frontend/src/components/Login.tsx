@@ -8,6 +8,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [error, setError] = useState<string | Record<string, string> | null>(
     null
   );
@@ -35,6 +36,7 @@ export default function Login() {
         email,
         password,
       });
+
       if (response.status === 201) {
         console.log("Login successful");
         navigate("/dashboard"); // Redirect to dashboard after successful login

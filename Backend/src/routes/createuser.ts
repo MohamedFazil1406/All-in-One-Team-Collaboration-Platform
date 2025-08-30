@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import { createUserSchema } from "../validation/uservalidation.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 router.use(express.json());
@@ -40,10 +41,14 @@ router.post("/api/data", async (req: Request, res: Response) => {
         password: hashedPassword,
       },
     });
-
+    const token = jwt.sign(
+      { name: result.name, email: result.email },
+      process.env.JWT_SECRET as string
+    );
     res.status(201).json({
       message: "Data created successfully",
       user: result,
+      token,
     });
     console.log("Data created successfully:", result);
   } catch (error) {

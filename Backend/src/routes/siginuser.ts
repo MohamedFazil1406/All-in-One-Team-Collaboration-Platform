@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import { SigninUserSchema } from "../validation/uservalidation.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 const router = Router();
 router.use(express.json());
 
